@@ -1,5 +1,0 @@
-<?
-require('../frames/header.php'); 
-?>
-
-

@@ -1,5 +1,9 @@
-<?php require("./frames/urlpointer.php"); ?>
-<? require('./frames/header.php'); ?>
+<?
+require("../frames/urlpointer.php");
+require("../frames/urlchanger.php");
+require('../frames/header.php'); 
+?>
+
 <?php
 
     $dbh = new PDO('sqlite:keionportal.db',",");

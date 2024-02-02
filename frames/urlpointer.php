@@ -1,7 +1,9 @@
 <?php
-$index = "index-j.php";
-$studioreserve = "./studioreserve/index.php";
-$memberinfo = "memberinfo.php";
-$admin = "./admin/index.php";
-$forvisiters = "../forvisiters/index-j.php";
+$urls = [
+    "home" => "index-j.php",
+    "reserve" => "reserve/index.php",
+    "info" => "info.php",
+    "login" => "users/login.php",
+    "admin" => "admin/index.php"
+];
 ?>

@@ -5,6 +5,6 @@ require('../frames/header.php');
 ?>
 <html>
     <body>
-    <h2>管理者設定</h2>
+    <h2>テンプレート</h2>
     </body>
 </html>

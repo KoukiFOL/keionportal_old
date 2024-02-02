@@ -1,4 +1,4 @@
-
+<? require("frames/urlpointer.php"); ?>
 <? require("./frames/header.php"); ?>
 <html>
     <body>

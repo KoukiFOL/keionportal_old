@@ -12,14 +12,14 @@
 <body>
 
     <div id="header">
-        <h1 class="title"><a href="index-j.php">KSU軽音ポータルサイト</a></h1>
+        <h1 class="title"><a href="<?php echo $urls["home"]; ?>">KSU軽音ポータルサイト</a></h1>
     </div>
     <ul class="navi">
-        <li><a href="<?php echo "$home"; ?>">ホーム</a></li>
-        <li><a href="<?php echo "$studioreserve"; ?>">スタジオ予約</a></li>
-        <li><a href=<?php echo "$memberinfo"; ?>>部員紹介</a></li>
-        <li><a href="">admin</a></li>
-        <li><a href="">広報サイトへ</a></li>
+        <li><a href="<?php echo $urls["home"]; ?>">ホーム</a></li>
+        <li><a href="<?php echo $urls["reserve"]; ?>">スタジオ予約</a></li>
+        <li><a href="<?php echo $urls["info"]; ?>">部員紹介</a></li>
+        <li><a href="<?php echo $urls["login"]; ?>">ログイン</a></li>
+        <li><a href="<?php echo $urls["admin"]; ?>">管理者</a></li>
     </ul>
 </body>
 
