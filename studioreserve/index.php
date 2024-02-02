@@ -1,1 +1,5 @@
-<? require('../frames/header.php'); ?>
+<?
+require('../frames/header.php'); 
+?>
+
+
