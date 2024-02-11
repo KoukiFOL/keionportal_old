@@ -12,10 +12,10 @@ require('../frames/header.php');
             <td><a href="../users/namelist.php">部員管理</a></td>
         </tr>
         <tr>
-            <td><a>スタジオ予約（管理者）</a></td>
+            <td><a href="../reserve/admin.php">スタジオ予約（管理者）</a></td>
         </tr>
         <tr>
-            <td><a></a></td> 
+            <td><a></a></td>
         </tr>
         <tr>
             <td><a></a></td>

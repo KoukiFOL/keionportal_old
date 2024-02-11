@@ -12,7 +12,7 @@ require('../frames/header.php');
 <html>
 
 <body>
-    <h2>スタジオ予約</h2>
+    <h2>スタジオ予約admin</h2>
     <table>
         <tr>
             <td></td>

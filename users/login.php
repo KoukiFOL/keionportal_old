@@ -6,7 +6,7 @@ require('../frames/header.php');
 
 <?php
 try{
-    $db = new SQLite3('sqlite:../keionportal.db');
+    $db = new PDO('sqlite:../keionportal.db');
 
 $number = $_POST['number'];
 $password = $_POST['password'];
@@ -25,7 +25,11 @@ if ($user && password_verify($password, $user['password'])) {
     echo '<p>ユーザー名またはパスワードが間違っています。</p>';
     header("Location: ./login.php");
 }
+}catch(PDOException $e){
+    echo "エラー。管理者に問い合わせてください。以下がエラー文です";
+    echo $e->getMessage();
 }
+?>
 ?>
 
 
