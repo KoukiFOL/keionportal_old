@@ -55,10 +55,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 
     <p>生年月日(例:20030526)</p>
     <input name="birthday" type="text">
-    <p>パスワード</p>
-    <input name="password" type="password">
-    <p>パスワード（確認のため再度入力）</p>
-    <input name="password" type="password"><br>
+    <p>現在のパスワード</p>
+    <input name="password" type="old_password">
+    <p>新しいパスワード</p>
+    <input name="password" type="new_password">
+    <p>新しいパスワード（確認のため再度入力）</p>
+    <input name="password" type="new_password2"><br>
     <br>
     <input type="submit" value="作成">
 </form>
