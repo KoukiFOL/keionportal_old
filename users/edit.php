@@ -6,8 +6,9 @@ require('../frames/header.php');
 
 <?php
 $database = new SQLite3("../keionportal.db");
+
+$_number = $_SESSION['number'];
 if ($_SERVER['REQUEST_METHOD'] === 'POST'){
-    $number = $_POST['number'];
     $grade = $_POST['grade'];
     $name = $_POST['name'];
     $part  = $_POST['part'];
@@ -17,34 +18,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
     }else{
         echo 'パスワードをもう一度確認してください。';
     }
-    
 
-    $stmt = $database->prepare('INSERT INTO users (number, grade, name, part, birthday, password) VALUES (:number, :grade, :name, :part, :birthday, :password)');
-    $stmt->bindValue(':number', $number);
-    $stmt->bindValue(':grade', $grade);
-    $stmt->bindValue(':name', $name);
-    $stmt->bindValue(':part', $part);
-    $stmt->bindValue(':birthday', $birthday);
-    $stmt->bindValue(':password', $password);
-    if ($stmt->execute()) {
-        echo "ユーザーが作成されました。";
-        echo '<a href="login.php">ログイン</a>';
-    } else {
-        echo "エラーが発生しました。";
-        echo $part;
-    }
+
 }
-
 ?>
 
-<h2>アカウント作成</h2>
-<form name="login" action="create.php" method="post" require>
+<h2>アカウント編集</h2>
+<form name="edit" action="edit.php" method="post">
     <p>学生証番号</p>
-    <input name="number" type="text" require>
-    <p>学年</p>
-    <input name="grade" type="text" require>
+    <p><?php echo "$number"; ?></p>
     <p>名前</p>
-    <input name="name" type="text" required>
+    <input name="name" type="text">
     <p>パート</p>
     <table>
         <tr>
@@ -72,9 +56,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
     <p>生年月日(例:20030526)</p>
     <input name="birthday" type="text">
     <p>パスワード</p>
-    <input name="password" type="password" required>
+    <input name="password" type="password">
     <p>パスワード（確認のため再度入力）</p>
-    <input name="password2" type="password"><br>
+    <input name="password" type="password"><br>
     <br>
     <input type="submit" value="作成">
 </form>

@@ -45,7 +45,12 @@ body{
       font-weight: bold;
       font-family: sans-serif;
     }
-    
+    .button{
+      text-align: center;
+      color: #635e5e;
+      
+
+    }
 
   /*共通css*/
 

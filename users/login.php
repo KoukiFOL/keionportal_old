@@ -3,43 +3,46 @@ require("../frames/urlpointer.php");
 require("../frames/urlchanger.php");
 require('../frames/header.php'); 
 ?>
-
 <?php
-try{
-    $db = new PDO('sqlite:../keionportal.db');
 
-$number = $_POST['number'];
-$password = $_POST['password'];
+// データベース接続
+$database = new SQLite3('../keionportal.db');
 
-$stmt = $db -> prepare('select * from users where number = :number');
-$stmt -> bindParam(':number',$number);
-$result = $stmt->execute();
-$user = $result -> fetchArray(SQLITE3_ASSOC); 
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    
+    // フォームから受け取ったユーザー名とパスワード
+    $number = $_POST['number'];
+    $password = $_POST['password'];
 
-if ($user && password_verify($password, $user['password'])) {
-    echo '<p>ログイン成功！</p>';
-    $_SESSION['number'] = $user['number'];
-    header("Location: ../index-j.php");
-
-} else {
-    echo '<p>ユーザー名またはパスワードが間違っています。</p>';
-    header("Location: ./login.php");
+    // データベースからユーザーを取得
+    $stmt = $database->prepare("SELECT * FROM users WHERE number = :number");
+    $stmt->bindValue(':number', $number, SQLITE3_TEXT);
+    $result = $stmt->execute()->fetchArray(SQLITE3_ASSOC);
+    
+    
+    
+    // パスワードの検証
+    if ($result && $password == $result['password']) {
+        
+        $_SESSION = $result;
+        
+        echo "{$_SESSION['name']} さん，ログインが完了しました。サービスをご利用いただけます。";
+    } else{
+        echo "学生証番号かパスワードが正しくありません";
+    }
 }
-}catch(PDOException $e){
-    echo "エラー。管理者に問い合わせてください。以下がエラー文です";
-    echo $e->getMessage();
-}
 ?>
-?>
-
-
-?>
-
+<html>
+    <body>
 <h2>ログイン</h2>
 <form name="login" action="login.php" method="post">
-    <p>UserId</p>
-    <input name="number" type="text">
+    <p>学生証番号</p>
+    <input name="number" type="text" required>
     <p>Password</p>
-    <input name="password" type="password"><br>
+    <input name="password" type="password" required><br>
+    <br>
     <input type="submit" value="ログイン">
 </form>
+<p class ="button"><a href="create.php">アカウント作成</a></p>
+</body>
+</html>

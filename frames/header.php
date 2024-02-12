@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -10,6 +13,7 @@
 </head>
 
 <body>
+    
 
     <div id="header">
         <h1 class="title"><a href="<?php echo $urls["home"]; ?>">KSU軽音ポータルサイト</a></h1>
@@ -18,9 +22,27 @@
         <li><a href="<?php echo $urls["home"]; ?>">ホーム</a></li>
         <li><a href="<?php echo $urls["reserve"]; ?>">スタジオ予約</a></li>
         <li><a href="<?php echo $urls["info"]; ?>">部員紹介</a></li>
-        <li><a href="<?php echo $urls["login"]; ?>">ログイン</a></li>
+        <?php
+        if (!$_SESSION){
+            echo '<li><a href="';
+            echo $urls['login'];
+            echo '">ログイン</a></li>';
+        }else{
+            echo '<li><a href="';
+            echo $urls['edit'];
+            echo '">アカウント編集</a></li>';
+            echo '<li><a href="';
+            echo $urls['logout'];
+            echo '">ログアウト</a></li>';
+        }
+        ?>
         <li><a href="<?php echo $urls["admin"]; ?>">管理者</a></li>
     </ul>
+    <?php
+    if ($_SESSION){
+        echo "こんにちは。{$_SESSION['name']} さん。";
+    }
+    ?>
 </body>
 
 </html>
