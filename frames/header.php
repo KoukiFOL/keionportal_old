@@ -1,5 +1,20 @@
 <?php
 session_start();
+
+function showpart($part){
+    switch ($part){
+        case 0:
+            return "ボーカル";
+        case 1:
+            return "ギター";
+        case 2:
+            return "キーボード";
+        case 3:
+            return "ベース";
+        case 4:
+            return "ドラム";   
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="ja">

@@ -13,13 +13,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
     $name = $_POST['name'];
     $part  = $_POST['part'];
     $birthday = $_POST['birthday'];
-    if ($_POST['password'] == $_POST['password2']){
-        $password = $_POST['password'];
-    }else{
-        echo 'パスワードをもう一度確認してください。';
-    }
-
-
 }
 ?>
 
@@ -28,8 +21,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
     <p>学生証番号</p>
     <p><?php echo "$number"; ?></p>
     <p>名前</p>
-    <input name="name" type="text">
+    <input name="name" type="text" value="<?php echo $_SESSION["name"]; ?>">
+    <p>生年月日(例:20030526)</p>
+    <input name="birthday" type="text" value="<?php echo $_SESSION["birthday"]; ?>">
     <p>パート</p>
+    <p>現在のパート: <?php echo showpart($_SESSION['part']);?></p>
+    
     <table>
         <tr>
             <th>ボーカル</th>
@@ -53,14 +50,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
         </tr>
     </table>
 
-    <p>生年月日(例:20030526)</p>
-    <input name="birthday" type="text">
-    <p>現在のパスワード</p>
-    <input name="password" type="old_password">
-    <p>新しいパスワード</p>
-    <input name="password" type="new_password">
-    <p>新しいパスワード（確認のため再度入力）</p>
-    <input name="password" type="new_password2"><br>
-    <br>
-    <input type="submit" value="作成">
 </form>

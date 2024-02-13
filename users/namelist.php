@@ -31,25 +31,9 @@ try{
             echo "<td>".$row['number']."</td>";
             echo "<td>".$row['grade']."</td>";
             echo "<td>".$row['name']."</td>";
-            switch ($row['part']){
-                case 0:
-                    echo "<td>ボーカル</td>";
-                    break;
-                case 1:
-                    echo "<td>ギター</td>";
-                    break;
-                case 2:
-                    echo "<td>キーボード</td>";
-                    break;
-                case 3:
-                    echo "<td>ベース</td>";
-                    break;
-                case 4:
-                    echo "<td>ドラム</td>";
-                    break;
-
-
-            }
+            echo "<td>";
+            echo showpart($row['part']);
+            echo "</td>";
             echo "<td>".$row['password']."</td>";
         }
         ?>

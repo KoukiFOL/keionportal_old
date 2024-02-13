@@ -5,8 +5,8 @@ require('../frames/header.php');
 ?>
 
 <?php
-
-
+$database = new SQLite3('../keionportal.db');
+$result = $database-> query('SELECT * FROM reserve');
 ?>
 
 <html>
@@ -159,6 +159,14 @@ require('../frames/header.php');
             <td>名前</td>
             <td>実行日時</td>
         </tr>
+        <?php
+        while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
+            echo '<tr>
+                    <td>'. $row['primary'] .'</td>';
+            echo  '<td>'. $row[''] .'</td>';
+        }
+        ?>
+        
     </table>
 </body>
 
