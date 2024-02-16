@@ -1,4 +1,5 @@
 <?
+session_start();
 require("../frames/urlpointer.php");
 require("../frames/urlchanger.php");
 require('../frames/header.php'); 
@@ -43,9 +44,8 @@ try{
 
 $db =null;
 }catch(PDOException $e){
-    echo "エラー。管理者に問い合わせてください。以下がエラー文です";
-    echo $e->getMessage();
-}
+    $message = "エラー。管理者に問い合わせてください。エラー文です{$e->getMessage()};";
+    }
 ?>
 
 

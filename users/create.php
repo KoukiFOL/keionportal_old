@@ -1,10 +1,7 @@
-<?
-require("../frames/urlpointer.php");
-require("../frames/urlchanger.php");
-require('../frames/header.php'); 
-?>
+
 
 <?php
+
 $database = new SQLite3("../keionportal.db");
 if ($_SERVER['REQUEST_METHOD'] === 'POST'){
     $number = $_POST['number'];
@@ -15,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
     if ($_POST['password'] == $_POST['password2']){
         $password = $_POST['password'];
     }else{
-        echo 'パスワードをもう一度確認してください。';
+        $message =  'パスワードをもう一度確認してください。';
     }
     
 
@@ -27,14 +24,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
     $stmt->bindValue(':birthday', $birthday);
     $stmt->bindValue(':password', $password);
     if ($stmt->execute()) {
-        echo "ユーザーが作成されました。";
-        echo '<a href="login.php">ログイン</a>';
+        session_start();
+        $message =  "ユーザーが作成されました。";
+        $_SESSION = $result;
+        header("Location:../index-j.php");
     } else {
-        echo "エラーが発生しました。";
+        $massage = "エラーが発生しました。";
         echo $part;
     }
 }
 
+?>
+
+<?
+require("../frames/urlpointer.php");
+require("../frames/urlchanger.php");
+require('../frames/header.php'); 
 ?>
 
 <h2>アカウント作成</h2>

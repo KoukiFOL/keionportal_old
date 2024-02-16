@@ -1,9 +1,6 @@
-<?
-require("../frames/urlpointer.php");
-require("../frames/urlchanger.php");
-require('../frames/header.php'); 
-?>
 <?php
+
+session_start();
 
 // データベース接続
 $database = new SQLite3('../keionportal.db');
@@ -25,13 +22,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($result && $password == $result['password']) {
         
         $_SESSION = $result;
+
+        header('Location:../index-j.php');
         
-        echo "{$_SESSION['name']} さん，ログインが完了しました。サービスをご利用いただけます。";
+        $message = "{$_SESSION['name']} さん，ログインが完了しました。サービスをご利用いただけます。";
     } else{
-        echo "学生証番号かパスワードが正しくありません";
+        $message = "学生証番号かパスワードが正しくありません";
     }
 }
 ?>
+
+<?
+require("../frames/urlpointer.php");
+require("../frames/urlchanger.php");
+require('../frames/header.php'); 
+?>
+
+
+
 <html>
     <body>
 <h2>ログイン</h2>

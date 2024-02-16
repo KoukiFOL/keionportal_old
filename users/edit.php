@@ -5,6 +5,7 @@ require('../frames/header.php');
 ?>
 
 <?php
+session_start();
 $database = new SQLite3("../keionportal.db");
 
 $_number = $_SESSION['number'];

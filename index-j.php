@@ -1,5 +1,9 @@
+<?php
+session_start();
+?>
 <? require("frames/urlpointer.php"); ?>
 <? require("./frames/header.php"); ?>
+
 <html>
     <body>
         <div class="home">

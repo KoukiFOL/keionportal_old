@@ -1,11 +1,7 @@
-<?
-require("../frames/urlpointer.php");
-require("../frames/urlchanger.php");
-require('../frames/header.php'); 
-?>
 <?php
+session_start();
 if (!isset($_SESSION)) {
-    echo '<h2>ログインされていません。</h2>';
+    $message = 'ログインされていません。';
 }else{
 
     // セッション変数をすべて削除
@@ -13,6 +9,14 @@ if (!isset($_SESSION)) {
 
     // セッションを破棄
     session_destroy();
-    echo '<h2>ログアウトしました。</h2>';
+    $message =  'ログアウトしました。';
+    header('Location:../index-j.php');
 }
+?>
+
+<?
+
+require("../frames/urlpointer.php");
+require("../frames/urlchanger.php");
+require('../frames/header.php'); 
 ?>

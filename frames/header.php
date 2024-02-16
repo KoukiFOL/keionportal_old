@@ -1,5 +1,4 @@
 <?php
-session_start();
 
 function showpart($part){
     switch ($part){
@@ -55,8 +54,11 @@ function showpart($part){
     </ul>
     <?php
     if ($_SESSION){
-        echo "こんにちは。{$_SESSION['name']} さん。";
+        $message = "こんにちは，{$_SESSION['name']} さん。";
     }
+    ?>
+    <?php
+    echo '<p>'. $message .'</p>';
     ?>
 </body>
 
