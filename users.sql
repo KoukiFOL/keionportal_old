@@ -3,8 +3,8 @@ sqlite3 keionportal.db <users.sql
 もしくは
 sqlite> .read users.sql で実行
 */
-DROP TABLE users;
-CREATE TABLE users (
+DROP TABLE IF EXISTS users;
+CREATE TABLE  users (
     admin integer,
     /*
     0 = admin
