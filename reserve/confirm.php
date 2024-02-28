@@ -3,12 +3,12 @@ session_start();
 if (!$_GET) {
     header("Location:./index.php");
     exit();
-}
-if (!$_SESSION) {
+} elseif (!$_SESSION) {
     header("Location:../users/login.php");
     $message = "ログインしてください。";
     exit();
 }
+
 ?>
 <?php
 require("../frames/urlpointer.php");
@@ -17,8 +17,23 @@ require('../frames/header.php');
 ?>
 
 <?php
+$name = $_SESSION['name'];
 $date = $_GET['date'];
 $time = $_GET['time'];
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $query = "UPDATE reserves SET :date = :name WHERE  = :time";
+    $stmt = $db->prepare($query);
+    $stmt->bindValue(':date', $date, SQLITE3_TEXT);
+    $stmt->bindValue(':name', $name, SQLITE3_TEXT);
+    $stmt->bindValue(':time', $text, SQLITE3_TEXT);
+    $result = $stmt->execute();
+    if ($result) {
+        $message = "予約が完了しました。";
+    } else {
+        $message = "もう一度やり直してください。 " . $db->lastErrorMsg();
+    }
+}
 
 ?>
 <html>
@@ -32,8 +47,8 @@ $time = $_GET['time'];
         <?php echo $time ?>
     </p>
     <h3>予約しますか？</h3>
-    <form name="confirm" action="confirm.php" method="post" require>
-        <input type="submit" value="はい" ;>
+    <form name="confirm" action="confirm.php" method="post">
+        <input type="submit" value="はい">
         <p><a href="./index.php">戻る</a></p>
     </form>
 </body>
