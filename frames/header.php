@@ -14,6 +14,10 @@ function showpart($part){
             return "ドラム";   
     }
 }
+
+function showdate($date){
+    
+}
 ?>
 <!DOCTYPE html>
 <html lang="ja">

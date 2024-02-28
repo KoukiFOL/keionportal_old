@@ -1,19 +1,30 @@
 <?php
 session_start();
+if (!$_SESSION){
+    header('Location:../users/login.php');
+    $message = "ログインしてください。";
+    exit();
+}
 ?>
 
 <?php
-$database = new SQLite3('../keionportal.db');
-$result = $database->query('SELECT * FROM reserve');
+// SQLite3データベースへの接続
+$db = new SQLite3('../keionportal.db');
+if (!$db) {
+    die("データベースに接続できません: " . $db->lastErrorMsg());
+}
+// テーブルからデータを取得
+$result = $db->query('SELECT * FROM reserves');
+if (!$result) {
+    die("クエリの実行に失敗しました: " . $db->lastErrorMsg());
+}
 ?>
 
-<?
+<?php
 require("../frames/urlpointer.php");
 require("../frames/urlchanger.php");
 require('../frames/header.php');
 ?>
-
-
 
 <html>
 
@@ -30,136 +41,27 @@ require('../frames/header.php');
             <td>月</td>
             <td>火</td>
         </tr>
-        <tr>
-            <td>8-9</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
 
-        <tr>
-            <td>9-10</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-
-        <tr>
-            <td>10-11</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-
-        <tr>
-            <td>11-12</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-
-        <tr>
-            <td>12-13</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-
-        <tr>
-            <td>13-14</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>14-15</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>15-16</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-
-        <tr>
-            <td>16-17</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-
-        <tr>
-            <td>17-18</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-
-        <tr>
-            <td>18-19</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-
-        <tr>
-            <td>19-20</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
+        <?php
+        while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
+            echo "<tr>";
+            echo '<td>' . $row['time'] . "</td>";
+            echo "<td>" . '<a href="./confirm.php?date=wednesday&time=' . $row['time'] . '">' . $row['wednesday'] . "</a></td>";
+            echo "<td>" . '<a href="./confirm.php?date=thursday&time=' . $row['time'] . '">' . $row['thursday'] . "</a></td>";
+            echo "<td>" . '<a href="./confirm.php?date=friday&time=' . $row['time'] . '">' . $row['friday'] . "</a></td>";
+            echo "<td>" . '<a href="./confirm.php?date=saturday&time=' . $row['time'] . '">' . $row['saturday'] . "</a></td>";
+            echo "<td>" . '<a href="./confirm.php?date=sunday&time=' . $row['time'] . '">' . $row['sunday'] . "</a></td>";
+            echo "<td>" . '<a href="./confirm.php?date=monday&time=' . $row['time'] . '">' . $row['monday'] . "</a></td>";
+            echo "<td>" . '<a href="./confirm.php?date=tuesday&time=' . $row['time'] . '">' . $row['tuesday'] . "</a></td>";
+            echo "</tr>";
+        }
+        ?>
     </table>
 
 </body>
 
 </html>
+
+<?php
+$db->close();
+?>
