@@ -1,41 +1,48 @@
 <?php
 session_start();
+
 if (!$_GET) {
-    header("Location:./index.php");
+    header("Location: ./index.php");
     exit();
 } elseif (!$_SESSION) {
-    header("Location:../users/login.php");
+    header("Location: ../users/login.php");
     $message = "ログインしてください。";
     exit();
 }
 
-?>
-<?php
 require("../frames/urlpointer.php");
 require("../frames/urlchanger.php");
 require('../frames/header.php');
-?>
 
-<?php
 $name = $_SESSION['name'];
 $date = $_GET['date'];
 $time = $_GET['time'];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $query = "UPDATE reserves SET :date = :name WHERE  = :time";
+    // データベースへの接続
+    $db = new SQLite3('../keionportal.db');
+    if (!$db) {
+        die("データベースに接続できません: " . $db->lastErrorMsg());
+    }
+
+    // UPDATE文の修正
+    $query = "UPDATE reserves SET {$date} = :name WHERE time = :time";
     $stmt = $db->prepare($query);
-    $stmt->bindValue(':date', $date, SQLITE3_TEXT);
     $stmt->bindValue(':name', $name, SQLITE3_TEXT);
-    $stmt->bindValue(':time', $text, SQLITE3_TEXT);
+    $stmt->bindValue(':time', $time, SQLITE3_TEXT);
     $result = $stmt->execute();
+
     if ($result) {
         $message = "予約が完了しました。";
     } else {
         $message = "もう一度やり直してください。 " . $db->lastErrorMsg();
     }
-}
 
+    // データベースを閉じる
+    $db->close();
+}
 ?>
+
 <html>
 
 <body>

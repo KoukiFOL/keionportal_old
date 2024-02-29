@@ -56,7 +56,9 @@ body{
 
   /*共通css*/
 
-
+img{
+  width: 80%;
+}
 
 h3{
   text-align: center;
