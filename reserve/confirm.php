@@ -22,10 +22,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // データベースへの接続
     $db = new SQLite3('../keionportal.db');
     if (!$db) {
-        die("データベースに接続できません: " . $db->lastErrorMsg());
+        echo("データベースに接続できません: " . $db->lastErrorMsg());
     }
 
-    // UPDATE文の修正
     $query = "UPDATE reserves SET {$date} = :name WHERE time = :time";
     $stmt = $db->prepare($query);
     $stmt->bindValue(':name', $name, SQLITE3_TEXT);
