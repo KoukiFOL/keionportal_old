@@ -1,12 +1,22 @@
-<?
+<?php
+
+session_start();
+if (!$_SESSION) {
+    header('Location:./login.php');
+    $message = "ログインしてください。";
+}
+
 require("../frames/urlpointer.php");
 require("../frames/urlchanger.php");
 require('../frames/header.php');
 ?>
 
 <?php
-session_start();
+
 $database = new SQLite3("../keionportal.db");
+if (!$db) {
+    die("データベースに接続できません: " . $db->lastErrorMsg());
+}
 
 $_number = $_SESSION['number'];
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -14,6 +24,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = $_POST['name'];
     $part = $_POST['part'];
     $birthday = $_POST['birthday'];
+    $query = "UPDATE users SET username = :username, email = :email WHERE id = :id";
+    $stmt = $db->prepare($query);
+    $stmt->bindValue(':username', $newUsername, SQLITE3_TEXT);
+    $stmt->bindValue(':email', $newEmail, SQLITE3_TEXT);
+    $stmt->bindValue(':id', $userId, SQLITE3_INTEGER);
+
 }
 ?>
 
@@ -21,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <form name="edit" action="edit.php" method="post">
     <p>学生証番号</p>
     <p>
-        <?php echo "$number"; ?>
+        <?php echo $number; ?>
     </p>
     <p>名前</p>
     <input name="name" type="text" value="<?php echo $_SESSION["name"]; ?>">
@@ -54,5 +70,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <th><input name="part" type="radio" value="4"></th>
         </tr>
     </table>
+    <input type="submit" value="更新">
 
 </form>

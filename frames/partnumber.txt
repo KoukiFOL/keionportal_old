@@ -1,5 +1,0 @@
-vocal 0
-guitar 1
-keybord 2
-bass 3
-drum 4
