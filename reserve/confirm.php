@@ -14,34 +14,35 @@ require("../frames/urlpointer.php");
 require("../frames/urlchanger.php");
 require('../frames/header.php');
 
+// データベースへの接続
+$db = new SQLite3('../keionportal.db');
+//データベースに接続できなかった場合の処理
+if (!$db) {
+    echo ("データベースに接続できません: " . $db->lastErrorMsg());
+}
+
 $name = $_SESSION['name'];
 $date = $_GET['date'];
 $time = $_GET['time'];
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // データベースへの接続
-    $db = new SQLite3('../keionportal.db');
-    if (!$db) {
-        echo("データベースに接続できません: " . $db->lastErrorMsg());
-    }
+//予約状況を取得
+$status_query = "SELECT {$date} from reserves where time = :time";
+$status_stmt = $db->prepare($status_query);
+$status_result = $status_stmt->execute();
 
-    $query = "UPDATE reserves SET {$date} = :name WHERE time = :time";
-    $stmt = $db->prepare($query);
-    $stmt->bindValue(':name', $name, SQLITE3_TEXT);
-    $stmt->bindValue(':time', $time, SQLITE3_TEXT);
-    $result = $stmt->execute();
-
-    if ($result) {
-        $message = "予約が完了しました。";
-    } else {
-        $message = "もう一度やり直してください。 " . $db->lastErrorMsg();
-    }
-
-    // データベースを閉じる
-    $db->close();
+if ($status_result) {
+    $status = $status_result;
+} else {
+    echo "予約状況を取得できませんでした。";
 }
-?>
 
+//if ($status == "空"){
+$query = "UPDATE reserves SET {$date} = :name WHERE time = :time";
+$stmt = $db->prepare($query);
+$stmt->bindValue(':name', $name, SQLITE3_TEXT);
+$stmt->bindValue(':time', $time, SQLITE3_TEXT);
+$result = $stmt->execute();
+?>
 <html>
 
 <body>
@@ -60,3 +61,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </body>
 
 </html>
+<?php
+if ($result) {
+    $message = "予約が完了しました。";
+} else {
+    $message = "もう一度やり直してください。 " . $db->lastErrorMsg();
+}
+//}elseif($status == $name){
+//
+
+//}
+
+
+
+// データベースを閉じる
+$db->close();
+?>
